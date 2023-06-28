@@ -4,7 +4,12 @@ import { nanoid } from 'nanoid'
 
 export default class App extends Component {
   state = {
-    contacts: [],
+    contacts: [
+      {id: 'id-1', name: 'Rosie Simpson', number: '459-12-56'},
+      {id: 'id-2', name: 'Hermione Kline', number: '443-89-12'},
+      {id: 'id-3', name: 'Eden Clements', number: '645-17-79'},
+      {id: 'id-4', name: 'Annie Copeland', number: '227-91-26'},
+    ],
     name: '',
     number: '',
     filter: ''
@@ -12,6 +17,11 @@ export default class App extends Component {
   handleInputChange = (e) => {
     this.setState({
       [e.target.name]: e.target.value,
+    })
+  }
+  handleSearchChange = (e) => {
+    this.setState({
+      [e.target.name]: e.target.value.toLowerCase(),
     })
   }
   handleAddContact = (e) => {
@@ -23,20 +33,6 @@ export default class App extends Component {
   handleDeleteContact = (contactId) => {
     this.setState({
       contacts: this.state.contacts.filter((contact) =>  contact.id !== contactId)
-    })
-  }
-  handleFilter = (e) => {
-    this.setState({      
-      [e.target.name]: e.target.value,
-      contacts: this.state.contacts.find(contact => contact.name.includes(this.state.filter))
-    })
-  }
-  reset = () => {
-    this.setState({
-      contacts: [],
-      name: '',
-      number: '',
-      filter: ''
     })
   }
   render() {
@@ -69,14 +65,20 @@ export default class App extends Component {
         </form>
         <h1>Contacts</h1>
         <label htmlFor="filter">Find contacts by name</label>
-        <input type="text" name="filter" id='filter' onChange={this.handleFilter}/>
+        <input type="text" name="filter" id='filter' onChange={this.handleSearchChange}/>
         <ul className="contactList">
-          {contacts.map(contact => (
-            <li key={nanoid()}> 
-              <p>{contact.name}: {contact.number}</p> 
-              <button type="button" onClick={()=> this.handleDeleteContact(contact.id)}>Delete</button>
-            </li>
-          ))}
+          {contacts.filter(contact => { 
+            return filter.toLowerCase() === ''
+              ? contact
+              : contact.name.toLowerCase().includes(filter)
+          }).map(contact => {
+            return (
+              <li key={nanoid()}>
+                <p>{contact.name}: {contact.number}</p>
+                <button type="button" onClick={() => this.handleDeleteContact(contact.id)}>Delete</button>
+              </li>
+            )
+          })}
         </ul>
       </div>
     )
