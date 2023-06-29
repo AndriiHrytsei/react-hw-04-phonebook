@@ -1,4 +1,4 @@
-export default function ContactList({items, filterVal}){
+export default function ContactList({items, filterVal, deleteContact}){
     return(
         <ul className="contactList">
           {items.filter(contact => { 
@@ -9,7 +9,7 @@ export default function ContactList({items, filterVal}){
             return (
               <li key={contact.id}>
                 <p>{contact.name}: {contact.number}</p>
-                <button type="button" onClick={() => this.handleDeleteContact(contact.id)}>Delete</button>
+                <button type="button" onClick={() => deleteContact(contact.id)}>Delete</button>
               </li>
             )
           })}

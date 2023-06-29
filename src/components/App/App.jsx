@@ -4,7 +4,7 @@ import { nanoid } from 'nanoid'
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import ContactForm from 'components/ContactForm/ContactForm';
 import SearchFilter from 'components/SearchFilter/SearchFilter';
-import ContactList from 'components/ContactList/ContactLsit';
+import ContactList from 'components/ContactList/ContactList';
 
 export default class App extends Component {
   state = {
@@ -54,7 +54,7 @@ export default class App extends Component {
         <ContactForm addContact={this.handleAddContact} inputChange={this.handleInputChange}/>
         <h1>Contacts</h1>
         <SearchFilter searchChange={this.handleSearchChange}/>
-        <ContactList items={contacts} filterVal={filter}/>
+        <ContactList items={contacts} filterVal={filter} deleteContact={this.handleDeleteContact}/>
       </div>
     )
   }
