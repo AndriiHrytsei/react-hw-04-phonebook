@@ -38,6 +38,7 @@
     ]
   },
   "devDependencies": {
-    "nanoid": "^4.0.2"
+    "nanoid": "^4.0.2",
+    "notiflix": "^3.2.6"
   }
 }

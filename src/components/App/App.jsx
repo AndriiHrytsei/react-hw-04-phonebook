@@ -1,6 +1,10 @@
 /* eslint-disable no-unused-vars */
 import React, { Component } from 'react'
 import { nanoid } from 'nanoid'
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
+import ContactForm from 'components/ContactForm/ContactForm';
+import SearchFilter from 'components/SearchFilter/SearchFilter';
+import ContactList from 'components/ContactList/ContactLsit';
 
 export default class App extends Component {
   state = {
@@ -19,15 +23,22 @@ export default class App extends Component {
       [e.target.name]: e.target.value,
     })
   }
+  handleAddContact = (e) => {
+    e.preventDefault()
+    const { name, number, contacts } = this.state
+    const existingContact = contacts.some(contact => contact.name === name)
+    const existingNumber = contacts.some(contact => contact.number === number)
+    if (existingContact || existingNumber) {
+      Notify.failure("Contact already exists")
+    } else {
+      this.setState({
+        contacts: [{id: nanoid(), name:this.state.name, number:this.state.number}, ...contacts]
+      })
+    }
+  }
   handleSearchChange = (e) => {
     this.setState({
       [e.target.name]: e.target.value.toLowerCase(),
-    })
-  }
-  handleAddContact = (e) => {
-    e.preventDefault()
-    this.setState({
-      contacts: [{id: nanoid(), name:this.state.name, number:this.state.number}, ...this.state.contacts]
     })
   }
   handleDeleteContact = (contactId) => {
@@ -40,46 +51,10 @@ export default class App extends Component {
     return (
       <div>
         <h1>Phonebook</h1>
-        <form className="contactForm" onSubmit={this.handleAddContact}>
-          <label htmlFor="name">Name</label>
-          <input
-            type="text"
-            name="name"
-            id='name'
-            pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-            title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-            required
-            onChange={this.handleInputChange}
-          />
-          <label htmlFor="number">Number</label>
-          <input
-            type="tel"
-            name="number"
-            id='number'
-            pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-            title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
-            required
-            onChange={this.handleInputChange}
-          />
-          <button type="submit" >Add contact</button>
-        </form>
+        <ContactForm addContact={this.handleAddContact} inputChange={this.handleInputChange}/>
         <h1>Contacts</h1>
-        <label htmlFor="filter">Find contacts by name</label>
-        <input type="text" name="filter" id='filter' onChange={this.handleSearchChange}/>
-        <ul className="contactList">
-          {contacts.filter(contact => { 
-            return filter.toLowerCase() === ''
-              ? contact
-              : contact.name.toLowerCase().includes(filter)
-          }).map(contact => {
-            return (
-              <li key={nanoid()}>
-                <p>{contact.name}: {contact.number}</p>
-                <button type="button" onClick={() => this.handleDeleteContact(contact.id)}>Delete</button>
-              </li>
-            )
-          })}
-        </ul>
+        <SearchFilter searchChange={this.handleSearchChange}/>
+        <ContactList items={contacts} filterVal={filter}/>
       </div>
     )
   }
