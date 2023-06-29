@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.js": "/react-hw-04-phonebook/static/js/main.63063905.js",
+    "main.js": "/react-hw-04-phonebook/static/js/main.b0bbf978.js",
     "index.html": "/react-hw-04-phonebook/index.html",
-    "main.63063905.js.map": "/react-hw-04-phonebook/static/js/main.63063905.js.map"
+    "main.b0bbf978.js.map": "/react-hw-04-phonebook/static/js/main.b0bbf978.js.map"
   },
   "entrypoints": [
-    "static/js/main.63063905.js"
+    "static/js/main.b0bbf978.js"
   ]
 }
