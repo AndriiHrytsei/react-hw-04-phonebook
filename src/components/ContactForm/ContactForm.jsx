@@ -1,6 +1,7 @@
+import css from "./ContactForm.module.css"
 export default function ContactForm({addContact, inputChange}) {
     return (
-        <form className="contactForm" onSubmit={addContact}>
+      <form className={css.contactForm} onSubmit={addContact}>
         <label htmlFor="name">Name</label>
         <input
           type="text"
@@ -21,7 +22,7 @@ export default function ContactForm({addContact, inputChange}) {
           required
           onChange={inputChange}
         />
-        <button type="submit" >Add contact</button>
+        <button type="submit">Add contact</button>
       </form>
     )
 }
