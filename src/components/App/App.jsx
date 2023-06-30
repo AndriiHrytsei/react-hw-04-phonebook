@@ -25,9 +25,10 @@ export default class App extends Component {
   }
   handleAddContact = (e) => {
     e.preventDefault()
-    const { name, number, contacts } = this.state
-    const existingContact = contacts.some(contact => contact.name === name)
-    const existingNumber = contacts.some(contact => contact.number === number)
+    const 
+      { name, number, contacts } = this.state,
+      existingContact = contacts.some(contact => contact.name === name),
+      existingNumber = contacts.some(contact => contact.number === number)
     if (existingContact || existingNumber) {
       Notify.failure("Contact already exists")
     } else {
@@ -42,8 +43,9 @@ export default class App extends Component {
     })
   }
   handleDeleteContact = (contactId) => {
+    const {contacts} = this.state
     this.setState({
-      contacts: this.state.contacts.filter((contact) =>  contact.id !== contactId)
+      contacts: contacts.filter((contact) =>  contact.id !== contactId)
     })
   }
   render() {

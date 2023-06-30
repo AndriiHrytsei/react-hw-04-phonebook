@@ -6,11 +6,11 @@ export default function ContactList({items, filterVal, deleteContact}){
             return filterVal.toLowerCase() === ''
               ? contact
               : contact.name.toLowerCase().includes(filterVal)
-          }).map(contact => {
+          }).map(({id, name, number}) => {
             return (
-              <li className={css.contact} key={contact.id}>
-                <p>{contact.name}: {contact.number}</p>
-                <button type="button" onClick={() => deleteContact(contact.id)}>Delete</button>
+              <li className={css.contact} key={id}>
+                <p>{name}: {number}</p>
+                <button type="button" onClick={() => deleteContact(id)}>Delete</button>
               </li>
             )
           })}
